@@ -1,12 +1,18 @@
-# Gera o instalador e publica o Release quando você envia uma tag "vX.Y.Z":
-#   git tag v1.0.0 && git push origin v1.0.0
-# Também pode ser rodado à mão (aba Actions → release → Run workflow): gera o instalador como artefato.
+# Compila o Mission4Me e anexa o instalador (+ SHA-256) ao Release.
+#
+# Para lançar uma versão: GitHub → Releases → "Draft a new release" → tag "vX.Y.Z" (nova) → Publish.
+#   (ou, pelo terminal: gh release create v1.1.0 --generate-notes)
+# Também pode ser rodado à mão (Actions → release → Run workflow): gera o instalador só como artefato.
 name: release
 
 on:
-  push:
-    tags: ['v*.*.*']
+  release:
+    types: [published]
   workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: read    # padrão mínimo; só o job abaixo ganha escrita
@@ -51,12 +57,10 @@ jobs:
             dist/Mission4Me-Setup-*.exe
             dist/Mission4Me-Setup-*.exe.sha256
 
-      - name: Publicar Release
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Anexar instalador ao Release
+        if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
-          name: Mission4Me ${{ steps.ver.outputs.version }}
           files: |
             dist/Mission4Me-Setup-*.exe
             dist/Mission4Me-Setup-*.exe.sha256
-          generate_release_notes: true

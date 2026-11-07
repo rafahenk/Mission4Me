@@ -95,15 +95,13 @@ winget install JRSoftware.InnoSetup
 
 ## Publicar uma versão
 
-O workflow `.github/workflows/release.yml` compila e publica o instalador quando uma tag é enviada:
+1. Atualize o `CHANGELOG.md`.
+2. No GitHub: **Releases → Draft a new release**, crie a tag `vX.Y.Z` e clique em **Publish release**
+   (ou pelo terminal: `gh release create v1.1.0 --generate-notes`).
+3. O workflow `.github/workflows/release.yml` compila e anexa o instalador e o `.sha256` ao Release.
 
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-Atualize o `CHANGELOG.md` antes. O instalador usa um `AppId` fixo, então novas versões **atualizam** a instalação
-existente (o app é fechado de forma limpa antes da cópia).
+O instalador usa um `AppId` fixo, então novas versões **atualizam** a instalação existente
+(o app é fechado de forma limpa antes da cópia).
 
 ## Estrutura
 
