@@ -44,7 +44,7 @@ jobs:
         run: ./build.ps1 -Version ${{ steps.ver.outputs.version }}
 
       - name: Guardar instalador (artefato)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Mission4Me-${{ steps.ver.outputs.version }}
           path: |
