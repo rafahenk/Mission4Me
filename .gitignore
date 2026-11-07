@@ -1,0 +1,8 @@
+# build
+bin/
+obj/
+dist/
+publish/
+*.user
+.vs/
+*.log

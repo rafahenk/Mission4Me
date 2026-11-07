@@ -1,0 +1,7 @@
+# Mantém as GitHub Actions do workflow atualizadas (correções de segurança chegam como Pull Request)
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
