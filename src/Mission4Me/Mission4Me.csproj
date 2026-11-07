@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\Mission4Me.ico</ApplicationIcon>
+    <!-- DPI é configurado no manifest (correto para WPF); o aviso vem do analisador do WinForms -->
+    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+
+    <AssemblyName>Mission4Me</AssemblyName>
+    <RootNamespace>Mission4Me</RootNamespace>
+    <!-- Versão: sobrescrita no build de release (-p:Version=x.y.z, vinda da tag do Git) -->
+    <Version>1.0.0</Version>
+    <Product>Mission4Me</Product>
+    <Title>Mission4Me</Title>
+    <Company>HNKL Tecnologia</Company>
+    <Copyright>© HNKL Tecnologia</Copyright>
+    <Description>Missões de foco com contador na barra de tarefas do Windows</Description>
+    <NeutralLanguage>pt-BR</NeutralLanguage>
+    <SatelliteResourceLanguages>pt-BR;en</SatelliteResourceLanguages>
+
+    <!-- Release reprodutível e sem símbolos de depuração junto do .exe -->
+    <Deterministic>true</Deterministic>
+    <DebugType Condition="'$(Configuration)' == 'Release'">embedded</DebugType>
+    <!-- Não grava o caminho da sua máquina (ex.: C:\Users\<login>\...) no executável nem nos erros -->
+    <PathMap>$(MSBuildProjectDirectory)=Mission4Me</PathMap>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Mission4Me.ico" />
+  </ItemGroup>
+
+</Project>
